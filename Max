@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Learn English with Fill-in-the-blanks Exercises</title>
+<style>
+body {
+  font-family: sans-serif;
+}
+
+.container {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.exercise {
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.blanks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.blank {
+  width: 100px;
+  height: 50px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.blank.correct {
+  background-color: green;
+}
+
+.blank.incorrect {
+  background-color: red;
+}
+
+.text {
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  width: 100%;
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>Learn English with Fill-in-the-blanks Exercises</h1>
+
+<div class="exercise">
+
+  <div class="blanks">
+    <div class="blank">apple</div>
+    <div class="blank">banana</div>
+    <div class="blank">cat</div>
+    <div class="blank">dog</div>
+  </div>
+
+  <div class="text">
+    The _ _ _ is a red fruit.
+  </div>
+
+  <input type="submit" class="submit-button" value="Submit" />
+
+</div>
+
+</div>
+
+<script>
+// Get the elements.
+const blanks = document.querySelectorAll('.blank');
+const text = document.querySelector('.text');
+const submitButton = document.querySelector('.submit-button');
+
+// Add event listeners to the blanks.
+blanks.forEach(blank => {
+  blank.addEventListener('dragstart', function(event) {
+    event.dataTransfer.setData('text', this.textContent);
+  });
+});
+
+// Add an event listener to the text element.
+text.addEventListener('drop', function(event) {
+  event.preventDefault();
+
+  // Get the dropped blank element.
+  const blank = event.dataTransfer.getData('text');
+
+  // Check if the blank is correct.
+  if (blank === this.textContent.trim()) {
+    blank.classList.add('correct');
+    blank.classList.remove('incorrect');
+  } else {
+    blank.classList.add('incorrect');
+    blank.classList.remove('correct');
+  }
+});
+
+// Add an event listener to the submit button.
+submitButton.addEventListener('click', function(event) {
+  event.preventDefault();
+
+  // Check if all the blanks are correct.
+  const allBlanksCorrect = blanks.every(blank => blank.classList.contains('correct'));
+
+  // Display a message to the user.
+  if (allBlanksCorrect) {
+    alert('Congratulations! You answered all the questions correctly.');
+  } else {
+    alert('Please try again.');
+  }
+});
+</script>
+</body>
+</html>
